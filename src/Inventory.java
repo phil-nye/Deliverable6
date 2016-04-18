@@ -8,13 +8,15 @@ import java.lang.Integer;
 import java.util.HashMap;
 
 public class Inventory {
-    private HashMap<String, Item> itemMap;
+    private HashMap<String, Item> itemMap; //this is the inventory
 
     public Inventory() {
-        itemMap = null;
+        itemMap = new HashMap<String, Item>();
     }
 
+    //get inventory from pipe-separated values document
     public Inventory(String inv_name) {
+        itemMap = new HashMap<String, Item>();
         addToInv(inv_name);
     }
 
@@ -64,7 +66,7 @@ public class Inventory {
     }
 
     public int modifyExisting(String oldName, Item itemInfo) {
-        if(itemInfo == null) {  // not a valid entry
+        if(itemInfo.isEmpty()) {  // not a valid entry
             System.out.println("Item not specified.")
             return -1;
         }
@@ -89,5 +91,23 @@ public class Inventory {
 
             return -1;
         }
+    }
+
+    public String showInv() {
+        if(itemMap.isEmpty()) {
+            return "Inventory is empty!";
+        }
+
+        String str = "";
+        int num = 1;
+        System.out.println("Inventory: ");
+        for(String key : itemMap.keySet()) {
+            Item merch = itemMap.get(key);
+
+            str += "\t" + num++ + ")\t";
+            str += merch.printItem() + "\n\n";
+        }
+
+        return str;
     }
 }
